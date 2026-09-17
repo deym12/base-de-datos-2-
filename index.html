@@ -698,29 +698,55 @@ var GITHUB_REPO   = 'base-de-datos-2';
 var GITHUB_BRANCH = 'main';
 
 var TRABAJOS_GITHUB = {
-var TRABAJOS_GITHUB = {
-  u1: { w1: [], w2: [], w3: [], w4: [] },
-  u2: { w1: [], w2: [], w3: [], w4: [] },
-  u3: { w1: [], w2: [], w3: [], w4: [] },
-  u4: { w1: [], w2: [], w3: [], w4: [] }
+  u1: {
+    w1: [{ nombre: 'sem-09.pdf', titulo: '📄 Trabajo Semana 09' }], w2: [{ nombre: 'sem-09.pdf', titulo: '📄 Trabajo Semana 09' }],
+    w3: [{ nombre: 'sem9_1781064394_6a28e2ca192bf.pdf', titulo: '📄 Trabajo Semana 9' }],
+    w4: [
+       { nombre: 'sem10_1782332341_6a3c3bb58a586.pdf', titulo: '📄 Trabajo Semana 10 - A' },
+       { nombre: 'sem10_1782439857_6a3ddfb101f79.pdf', titulo: '📄 Trabajo Semana 10 - B' }
+    ]
+  },
+  u2: { w1:[{ nombre: 'sem-09.pdf', titulo: '📄 Trabajo Semana 09' }], w2:[{ nombre: 'sem-09.pdf', titulo: '📄 Trabajo Semana 09' }], w3:[{ nombre: 'sem-09.pdf', titulo: '📄 Trabajo Semana 09' }], w4:[{ nombre: 'sem-09.pdf', titulo: '📄 Trabajo Semana 09' }] },
+  u3: { w1:[
+    { nombre: 'sem-09.pdf', titulo: '📄 Trabajo Semana 09' },
+    { nombre: 'sem-09-1.pdf', titulo: '📄 Trabajo Semana 09' }
+  ],
+   w2:[
+    { nombre: 'sem-10.pdf', titulo: '📄 Trabajo Semana 10' },
+    { nombre: 'sem-10-1.pdf', titulo: '📄 Trabajo Semana 10' }
+   ], 
+   w3:[
+    { nombre: 'sem-11.pdf', titulo: '📄 Trabajo Semana 11' }
+   ], w4:[
+    { nombre: 'sem-12.pdf', titulo: '📄 Trabajo Semana 12' }
+   ] },
+  u4: { w1:[
+    { nombre: 'tema-01.pdf', titulo: '📄 Trabajo Semana 13' },
+    { nombre: 'tema-02.pdf', titulo: '📄 Trabajo Semana 13' },
+    { nombre: 'tema-03.pdf', titulo: '📄 Trabajo Semana 13' },
+    { nombre: 'tema-04.pdf', titulo: '📄 Trabajo Semana 13' },
+    { nombre: 'tema-05.pdf', titulo: '📄 Trabajo Semana 13' },
+    { nombre: 'tema-06.pdf', titulo: '📄 Trabajo Semana 13' },
+
+  ], w2:[], w3:[], w4:[] }
 };
 
 var UNIDADES = {
-  u1:{ romano:'I', color:'#7c4dff', titulo:'Unidad I', sub:'', semanas:[
-    {n:1, titulo:'Semana 01', desc:''}, {n:2, titulo:'Semana 02', desc:''},
-    {n:3, titulo:'Semana 03', desc:''}, {n:4, titulo:'Semana 04', desc:''}
+  u1:{ romano:'I', color:'#7c4dff', titulo:'Unidad I: Introducción a Bases de Datos', sub:'Fundamentos, modelo relacional, SQL básico y DDL.', semanas:[
+    {n:1, titulo:'Semana 01', desc:'Conceptos básicos'}, {n:2, titulo:'Semana 02', desc:'Modelo Relacional'},
+    {n:3, titulo:'Semana 03', desc:'SQL DDL'}, {n:4, titulo:'Semana 04', desc:'SQL DML'}
   ]},
-  u2:{ romano:'II', color:'#00bfa5', titulo:'Unidad II', sub:'', semanas:[
-    {n:1, titulo:'Semana 05', desc:''}, {n:2, titulo:'Semana 06', desc:''},
-    {n:3, titulo:'Semana 07', desc:''}, {n:4, titulo:'Semana 08', desc:''}
+  u2:{ romano:'II', color:'#00bfa5', titulo:'Unidad II: Diseño y Normalización', sub:'Modelado ER, formas normales e integridad referencial.', semanas:[
+    {n:1, titulo:'Semana 05', desc:'Entidad-Relación'}, {n:2, titulo:'Semana 06', desc:'Mapeo'},
+    {n:3, titulo:'Semana 07', desc:'Normalización'}, {n:4, titulo:'Semana 08', desc:'Integridad'}
   ]},
-  u3:{ romano:'III', color:'#ff5252', titulo:'Unidad III', sub:'', semanas:[
-    {n:1, titulo:'Semana 09', desc:''}, {n:2, titulo:'Semana 10', desc:''},
-    {n:3, titulo:'Semana 11', desc:''}, {n:4, titulo:'Semana 12', desc:''}
+  u3:{ romano:'III', color:'#ff5252', titulo:'Unidad III: SQL Avanzado', sub:'Consultas complejas, vistas y procedimientos.', semanas:[
+    {n:1, titulo:'Semana 09', desc:'Joins y Subconsultas'}, {n:2, titulo:'Semana 10', desc:'Vistas'},
+    {n:3, titulo:'Semana 11', desc:'Procedimientos'}, {n:4, titulo:'Semana 12', desc:'Triggers'}
   ]},
-  u4:{ romano:'IV', color:'#ff9800', titulo:'Unidad IV', sub:'', semanas:[
-    {n:1, titulo:'Semana 13', desc:''}, {n:2, titulo:'Semana 14', desc:''},
-    {n:3, titulo:'Semana 15', desc:''}, {n:4, titulo:'Semana 16', desc:''}
+  u4:{ romano:'IV', color:'#ff9800', titulo:'Unidad IV: Bases de Datos NoSQL', sub:'MongoDB, Redis y comparativa con SQL.', semanas:[
+    {n:1, titulo:'Semana 13', desc:'Intro NoSQL'}, {n:2, titulo:'Semana 14', desc:'MongoDB'},
+    {n:3, titulo:'Semana 15', desc:'Redis'}, {n:4, titulo:'Semana 16', desc:'Proyecto Final'}
   ]}
 };
 
