@@ -625,7 +625,7 @@ h1.big{
       <p>Repositorio centralizado de trabajos, prácticas y proyectos del curso. Estructurado por unidades y semanas para un aprendizaje progresivo.</p>
       <div class="hbtns">
         <button class="btn" onclick="ir('u1')">📚 Ver Trabajos</button>
-        <button class="btn2" onclick="window.open('https://github.com/r01147f-bit/base-de-datos-2','_blank')">🔗 GitHub Repo</button>
+      <button class="btn2" onclick="window.open('https://github.com/deym12/base-de-datos-2-','_blank')">🔗 Repositorio</button>
       </div>
     </div>
     
@@ -693,40 +693,16 @@ h1.big{
 </div>
 
 <script>
-var GITHUB_USER   = 'r01147f-bit';
-var GITHUB_REPO   = 'base-de-datos-2';
-var GITHUB_BRANCH = 'main';
+var ARCHIVOS_BASE_URL = 'https://raw.githubusercontent.com/deym12/base-de-datos-2-/main/';
 
 var TRABAJOS_GITHUB = {
   u1: {
-    w1: [{ nombre: 'Arquitecturas.jpg' }], 
-    w2: [ ],
-    w3: [ ],
-    w4: [ ]
+    w1: [{ nombre: 'Arquiotecturas.pdf', titulo: '📄 Capítulo 01' }],
+    w2: [], w3: [], w4: []
   },
-  u2: { w1:[{ nombre: 'sem-09.pdf', titulo: '📄 Trabajo Semana 09' }], w2:[{ nombre: 'sem-09.pdf', titulo: '📄 Trabajo Semana 09' }], w3:[{ nombre: 'sem-09.pdf', titulo: '📄 Trabajo Semana 09' }], w4:[{ nombre: 'sem-09.pdf', titulo: '📄 Trabajo Semana 09' }] },
-  u3: { w1:[
-    { nombre: 'sem-09.pdf', titulo: '📄 Trabajo Semana 09' },
-    { nombre: 'sem-09-1.pdf', titulo: '📄 Trabajo Semana 09' }
-  ],
-   w2:[
-    { nombre: 'sem-10.pdf', titulo: '📄 Trabajo Semana 10' },
-    { nombre: 'sem-10-1.pdf', titulo: '📄 Trabajo Semana 10' }
-   ], 
-   w3:[
-    { nombre: 'sem-11.pdf', titulo: '📄 Trabajo Semana 11' }
-   ], w4:[
-    { nombre: 'sem-12.pdf', titulo: '📄 Trabajo Semana 12' }
-   ] },
-  u4: { w1:[
-    { nombre: 'tema-01.pdf', titulo: '📄 Trabajo Semana 13' },
-    { nombre: 'tema-02.pdf', titulo: '📄 Trabajo Semana 13' },
-    { nombre: 'tema-03.pdf', titulo: '📄 Trabajo Semana 13' },
-    { nombre: 'tema-04.pdf', titulo: '📄 Trabajo Semana 13' },
-    { nombre: 'tema-05.pdf', titulo: '📄 Trabajo Semana 13' },
-    { nombre: 'tema-06.pdf', titulo: '📄 Trabajo Semana 13' },
-
-  ], w2:[], w3:[], w4:[] }
+  u2: { w1:[], w2:[], w3:[], w4:[] },
+  u3: { w1:[], w2:[], w3:[], w4:[] },
+  u4: { w1:[], w2:[], w3:[], w4:[] }
 };
 
 var UNIDADES = {
@@ -803,7 +779,7 @@ function renderArchivos(gh, local, nSem){
   if(gh.length > 0){
     html += '<div style="font-weight:800; font-size:0.7rem; color:#7986cb; margin-bottom:0.8rem; text-transform:uppercase; letter-spacing:1px">📁 Archivos en GitHub</div>';
     gh.forEach(item => {
-      let url = `https://raw.githubusercontent.com/${GITHUB_USER}/${GITHUB_REPO}/${GITHUB_BRANCH}/${item.nombre}`;
+      let url = `${ARCHIVOS_BASE_URL}${item.nombre}`;
       html += `<div class="mc"><span class="mico">📕</span><div class="mif"><span class="mt">${item.titulo}</span><br><span class="mm">${item.nombre}</span></div><a href="${url}" target="_blank" class="dlb">⬇ Descargar</a></div>`;
     });
   }
