@@ -661,10 +661,11 @@ h1.big{
       </div>
 
       <div id="upbox">
-        <h3 style="margin-bottom:1rem">📤 Subir Trabajo - <span id="upctx">Semana</span></h3>
+        <h3 style="margin-bottom:1rem">📤 Vista previa JPG - <span id="upctx">Semana</span></h3>
+        <p style="font-size:.78rem;color:var(--tx2);margin-bottom:1rem">Selecciona una imagen JPG/JPEG para probar cómo se verá. Para publicarla permanentemente, súbela a la carpeta correspondiente de tu repositorio y agrégala en la configuración de GitHub de abajo.</p>
         <input type="text" id="up-ttl" class="fi" placeholder="Título del trabajo">
-        <input type="file" id="fi-inp" class="fi">
-        <button class="btn" onclick="guardarArchivo()">✓ Guardar</button>
+        <input type="file" id="fi-inp" class="fi" accept="image/jpeg,.jpg,.jpeg">
+        <button class="btn" onclick="guardarArchivo()">✓ Ver JPG</button>
         <button class="btn2" onclick="cerrarUpload()">Cancelar</button>
       </div>
 
@@ -693,11 +694,39 @@ h1.big{
 </div>
 
 <script>
+// URL pública de archivos del repositorio. Mantén aquí la rama que uses en GitHub.
 var ARCHIVOS_BASE_URL = 'https://raw.githubusercontent.com/deym12/base-de-datos-2-/main/';
+
+// Para publicar un trabajo: sube el JPG al repositorio y agrega una línea aquí,
+// dentro de la semana correspondiente. Ejemplo:
+// w2: [{ nombre: 'trabajos/semana-02/modelo.jpg', titulo: 'Modelo relacional' }]
+function githubFileUrl(nombre){
+  return ARCHIVOS_BASE_URL + nombre.split('/').map(encodeURIComponent).join('/');
+}
+
+async function descargarGithubJpg(event, url, nombre){
+  event.preventDefault();
+  try{
+    var response = await fetch(url, { mode: 'cors' });
+    if(!response.ok) throw new Error('HTTP ' + response.status);
+    var blob = await response.blob();
+    var blobUrl = URL.createObjectURL(blob);
+    var link = document.createElement('a');
+    link.href = blobUrl;
+    link.download = nombre.split('/').pop() || 'trabajo.jpg';
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    setTimeout(() => URL.revokeObjectURL(blobUrl), 1000);
+  }catch(error){
+    // Si el navegador bloquea la descarga, al menos muestra el JPG directamente.
+    window.open(url, '_blank', 'noopener');
+  }
+}
 
 var TRABAJOS_GITHUB = {
   u1: {
-    w1: [{ nombre: 'Arquiotecturas.pdf', titulo: '📄 Capítulo 01' }],
+    w1: [{ nombre: 'capitulo1.1.jpg', titulo: '🖼️ Capítulo 01' }],
     w2: [], w3: [], w4: []
   },
   u2: { w1:[], w2:[], w3:[], w4:[] },
@@ -779,20 +808,20 @@ function renderArchivos(gh, local, nSem){
   if(gh.length > 0){
     html += '<div style="font-weight:800; font-size:0.7rem; color:#7986cb; margin-bottom:0.8rem; text-transform:uppercase; letter-spacing:1px">📁 Archivos en GitHub</div>';
     gh.forEach(item => {
-      let url = `${ARCHIVOS_BASE_URL}${item.nombre}`;
-      html += `<div class="mc"><span class="mico">📕</span><div class="mif"><span class="mt">${item.titulo}</span><br><span class="mm">${item.nombre}</span></div><a href="${url}" target="_blank" class="dlb">⬇ Descargar</a></div>`;
+      let url = githubFileUrl(item.nombre);
+      html += `<div class="mc"><span class="mico">🖼️</span><div class="mif"><span class="mt">${item.titulo}</span><br><span class="mm">${item.nombre}</span></div><a href="${url}" target="_blank" rel="noopener" class="dlb" onclick='descargarGithubJpg(event, ${JSON.stringify(url)}, ${JSON.stringify(item.nombre)})'>⬇ Ver / descargar JPG</a></div>`;
     });
   }
   if(local.length > 0){
-    html += '<div style="font-weight:800; font-size:0.7rem; color:var(--g); margin:1rem 0 0.8rem; text-transform:uppercase; letter-spacing:1px">📤 Archivos Locales</div>';
+    html += '<div style="font-weight:800; font-size:0.7rem; color:var(--g); margin:1rem 0 0.8rem; text-transform:uppercase; letter-spacing:1px">🧪 Vista previa local (solo este navegador)</div>';
     local.forEach(item => {
-      html += `<div class="mc"><span class="mico">📄</span><div class="mif"><span class="mt">${item.titulo}</span><br><span class="mm">${item.fname}</span></div><a href="${item.dataUrl}" download="${item.fname}" class="dlb">⬇ Descargar</a></div>`;
+      html += `<div class="mc"><span class="mico">🖼️</span><div class="mif"><span class="mt">${item.titulo}</span><br><span class="mm">${item.fname}</span></div><a href="${item.dataUrl}" download="${item.fname}" class="dlb">⬇ Descargar JPG</a></div>`;
     });
   }
   if(gh.length === 0 && local.length === 0){
     html += '<div style="text-align:center; padding:1rem; color:var(--tx3); font-size:0.85rem">📂 No hay archivos disponibles en esta semana</div>';
   }
-  html += `<button class="btn2" style="margin-top:1rem; width:100%" onclick="abrirUpload(${nSem})">📤 Subir archivo local</button>`;
+  html += `<button class="btn2" style="margin-top:1rem; width:100%" onclick="abrirUpload(${nSem})">📤 Probar un JPG local</button>`;
   return html;
 }
 
@@ -802,13 +831,15 @@ function cerrarUpload(){ document.getElementById('upbox').style.display = 'none'
 
 function guardarArchivo(){
   var fileInp = document.getElementById('fi-inp'), titleInp = document.getElementById('up-ttl');
-  if(!fileInp.files[0] || !titleInp.value) { toast('❌ Selecciona un archivo y ponle un título','terr'); return; }
+  var file = fileInp.files[0];
+  if(!file || !titleInp.value.trim()) { toast('❌ Selecciona un JPG y ponle un título','terr'); return; }
+  if(!['image/jpeg'].includes(file.type) && !/\.jpe?g$/i.test(file.name)) { toast('❌ Solo se permiten imágenes JPG o JPEG','terr'); return; }
   var reader = new FileReader();
   reader.onload = function(e){
     var key = A.unidad + '_w' + A.semana;
     if(!A.mats[key]) A.mats[key] = [];
-    A.mats[key].push({ titulo: titleInp.value, fname: fileInp.files[0].name, dataUrl: e.target.result });
-    toast('✅ Archivo guardado localmente','tok');
+    A.mats[key].push({ titulo: titleInp.value.trim(), fname: file.name, dataUrl: e.target.result });
+    toast('✅ JPG cargado como vista previa local. Súbelo a GitHub para publicarlo.','tok');
     titleInp.value = ''; fileInp.value = '';
     cerrarUpload(); renderSemanas();
   };
